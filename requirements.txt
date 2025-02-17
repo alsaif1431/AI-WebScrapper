@@ -1,3 +1,4 @@
+pytest-playwright
 litellm
 python-dotenv
 pydantic
