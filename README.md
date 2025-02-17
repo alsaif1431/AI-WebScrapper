@@ -7,7 +7,7 @@ venv\Scripts\activate
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. *********     IMPORTANT     ********
+# 4. Creating Supabase account
         1. **[Create a free Supabase account](https://supabase.com/)**.
         2. **Create a new project** inside Supabase.
         3. **Create a table** in your project by running the following SQL command in the **SQL Editor**:
