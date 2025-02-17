@@ -2,17 +2,10 @@
 python -m venv venv
 
 # 2. Activate the virtual environment
-# On Windows:
 venv\Scripts\activate
-
-# On Mac/Linux:
-source venv/bin/activate
 
 # 3. Install dependencies
 pip install -r requirements.txt
-
-#if there are any errors in the instalation please install every library in the requirements.txt
-
 
 # 4. *********     IMPORTANT     ********
         1. **[Create a free Supabase account](https://supabase.com/)**.
