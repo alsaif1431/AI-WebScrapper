@@ -3,20 +3,23 @@
 import json
 from typing import List
 from pydantic import BaseModel, create_model
-from services.assets import (OPENAI_MODEL_FULLNAME,GEMINI_MODEL_FULLNAME,SYSTEM_MESSAGE)
-from functions.llm_calls import (call_llm_model)
+from services.assets import OPENAI_MODEL_FULLNAME, GEMINI_MODEL_FULLNAME, SYSTEM_MESSAGE
+from functions.llm_calls import call_llm_model
 from functions.markdown import read_raw_data
 from functions.api_management import get_supabase_client
-from services.utils import  generate_unique_name
+from services.utils import generate_unique_name
 
 supabase = get_supabase_client()
 
+
 def create_dynamic_listing_model(field_names: List[str]):
     field_definitions = {field: (str, ...) for field in field_names}
-    return create_model('DynamicListingModel', **field_definitions)
+    return create_model("DynamicListingModel", **field_definitions)
+
 
 def create_listings_container_model(listing_model: BaseModel):
-    return create_model('DynamicListingsContainer', listings=(List[listing_model], ...))
+    return create_model("DynamicListingsContainer", listings=(List[listing_model], ...))
+
 
 def generate_system_message(listing_model: BaseModel) -> str:
     # same logic as your code
@@ -28,7 +31,10 @@ def generate_system_message(listing_model: BaseModel) -> str:
 
     schema_structure = ",\n".join(field_descriptions)
 
-    final_prompt= SYSTEM_MESSAGE+"\n"+f"""strictly follows this schema:
+    final_prompt = (
+        SYSTEM_MESSAGE
+        + "\n"
+        + f"""strictly follows this schema:
     {{
        "listings": [
          {{
@@ -37,6 +43,7 @@ def generate_system_message(listing_model: BaseModel) -> str:
        ]
     }}
     """
+    )
 
     return final_prompt
 
@@ -52,12 +59,13 @@ def save_formatted_data(unique_name: str, formatted_data):
     else:
         data_json = formatted_data
 
-    supabase.table("scraped_data").update({
-        "formatted_data": data_json
-    }).eq("unique_name", unique_name).execute()
+    supabase.table("scraped_data").update({"formatted_data": data_json}).eq(
+        "unique_name", unique_name
+    ).execute()
     MAGENTA = "\033[35m"
     RESET = "\033[0m"  # Reset color to default
     print(f"{MAGENTA}INFO:Scraped data saved for {unique_name}{RESET}")
+
 
 def scrape_urls(unique_names: List[str], fields: List[str], selected_model: str):
     """
@@ -84,7 +92,9 @@ def scrape_urls(unique_names: List[str], fields: List[str], selected_model: str)
             print(f"{BLUE}No raw_data found for {uniq}, skipping.{RESET}")
             continue
 
-        parsed, token_counts, cost = call_llm_model(raw_data, DynamicListingsContainer, selected_model, SYSTEM_MESSAGE)
+        parsed, token_counts, cost = call_llm_model(
+            raw_data, DynamicListingsContainer, selected_model, SYSTEM_MESSAGE
+        )
 
         # store
         save_formatted_data(uniq, parsed)
@@ -92,6 +102,6 @@ def scrape_urls(unique_names: List[str], fields: List[str], selected_model: str)
         total_input_tokens += token_counts["input_tokens"]
         total_output_tokens += token_counts["output_tokens"]
         total_cost += cost
-        parsed_results.append({"unique_name": uniq,"parsed_data": parsed})
+        parsed_results.append({"unique_name": uniq, "parsed_data": parsed})
 
     return total_input_tokens, total_output_tokens, total_cost, parsed_results

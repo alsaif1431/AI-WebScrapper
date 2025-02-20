@@ -302,7 +302,6 @@ if st.session_state["scraping_state"] == "completed" and st.session_state["resul
                 # Now we have "parsed_obj" as a dict, list, or string
                 data_item["parsed_data"] = parsed_obj
 
-
             pd_obj = data_item["parsed_data"]
 
             # If it has 'listings' in parsed_data
