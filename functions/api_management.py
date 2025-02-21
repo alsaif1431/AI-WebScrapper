@@ -18,7 +18,7 @@ def get_api_key(model):
 
 def get_supabase_client():
     """Returns a Supabase client if credentials exist, otherwise shows a guide."""
-    supabase_url = st.session_state.get('SUPABASE_URL') or st.secrets.get('SUPABASE_URL')
+    supabase_url = st.session_state.get('SUPABASE_URL') or st.secrets.get('SUPABASE_URL') 
     supabase_key = st.session_state.get('SUPABASE_ANON_KEY') or st.secrets.get('SUPABASE_ANON_KEY')
 
     if not supabase_url or not supabase_key or "your-supabase-url-here" in supabase_url:
