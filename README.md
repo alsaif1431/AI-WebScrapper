@@ -25,7 +25,7 @@ pip install -r requirements.txt
         ```
 
         4. **Go to Project Settings → API** and copy:
-            - **Supabase URL**
+            - **Supabase URL** 
             - **Anon Key**
         
         5. **Update your `.env` file** with these values:
