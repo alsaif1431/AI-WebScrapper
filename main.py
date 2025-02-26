@@ -5,6 +5,9 @@ import json
 import re
 import sys
 import asyncio
+import os
+os.system("playwright install")
+
 
 # ---local imports---
 from functions.scraper import scrape_urls
