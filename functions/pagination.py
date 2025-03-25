@@ -2,7 +2,7 @@
 
 import json
 from typing import List, Dict
-from services.assets import PROMPT_PAGINATION
+from services.assets import PROMPT_PAGINATION 
 from functions.markdown import read_raw_data
 from functions.api_management import get_supabase_client
 from pydantic import BaseModel, Field
