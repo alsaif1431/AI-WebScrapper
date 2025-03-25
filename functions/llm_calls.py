@@ -53,7 +53,7 @@ def call_llm_model(
     if env_value:
         os.environ[env_var_name] = env_value
 
-    model_max_tokens = get_max_tokens(model)
+    model_max_tokens = get_max_tokens(model) 
     if max_tokens is not None:
         max_tokens = min(max_tokens, model_max_tokens) - 100
     elif use_model_max_tokens_if_none:
