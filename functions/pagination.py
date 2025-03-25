@@ -23,7 +23,7 @@ def get_pagination_response_format():
 
 def create_dynamic_listing_model(field_names: List[str]):
     field_definitions = {field: (str, ...) for field in field_names}
-    return create_model('DynamicListingModel', **field_definitions)
+    return create_model('DynamicListingModel', **field_definitions) 
 
 def build_pagination_prompt(indications: str, url: str) -> str:
     # Base prompt
