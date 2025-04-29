@@ -1,5 +1,5 @@
 pytest-playwright 
-litellm 
+litellm
 python-dotenv
 pydantic
 pandas
